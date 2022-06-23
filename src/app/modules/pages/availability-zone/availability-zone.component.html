@@ -1,0 +1,27 @@
+<br><br>
+<div>
+    <form [formGroup]="form2"  >
+        <div>
+            <h2>Availability Zone</h2>
+        </div>
+        <formly-form [model]="model2" [fields]="fields2" [options]="options2" [form]="form2"></formly-form>
+       
+       
+      </form>
+    
+   
+
+</div>
+<div fxLayout="row" fxLayoutAlign="center center" class="bottom-btn"  fxLayoutGap="20px">
+    <div>
+        <button mat-raised-button style="width: 130px !important;">Cancel</button>
+    </div>
+    <div>
+       
+        <button type="submit"  mat-raised-button color="primary" style="width: 130px !important;" (click)="saveAvailabilitZone()">Save</button>
+    </div>
+    <div>
+       
+        <button type="submit"  mat-raised-button matStepperNext color="primary" style="width: 130px !important;" (click)="saveAvailabilitZone()">Save & Next</button>
+    </div>
+</div>

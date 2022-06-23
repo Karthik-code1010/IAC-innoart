@@ -1,0 +1,722 @@
+<div class="container">
+    <h1 class="head-txt">
+        Infrastructure as Code
+    </h1>
+  
+   
+    <br>
+   
+    <div  fxLayout="row" fxLayout.sm="column"  fxLayout.xs="column"  fxLayoutGap="30px" fxLayoutAlign="space-between center" >
+       
+      
+       
+<mat-stepper style="width: 100%;" >
+    <mat-step *ngIf="iacstack_bool" [editable]="true" label="IAC Stack" state="phone">
+        <!-- <form [formGroup]="form">
+            <div fxLayout="column">
+                <div  fxLayout="row">
+                    <div fxFlex="40">
+                        <div>
+                            <h2>Stack Information</h2>
+                        </div>
+                        <div>
+                            <div>
+                                <mat-form-field style="width:100%;" appearance="outline" >
+                     
+                                
+                                    <input type="text" matInput placeholder="Stack Name" formControlName="stckname">
+                                   
+                                  </mat-form-field>
+                            </div>
+                           
+                            <div>
+                                <mat-form-field   style="width:100%;"  appearance="outline" >
+                                    <textarea matInput name="questionText" cols="35" rows="8" placeholder="Short Description" formControlName="stckdescription" ></textarea>
+                                       </mat-form-field>
+                            </div>
+            
+                        </div>
+                    </div>
+                    <div fxFlex="60"></div>
+    
+                </div>
+               
+    
+            </div>
+    
+    
+           
+        </form> -->
+        <div>
+            <h2>Stack Information</h2>
+        </div>
+        <form [formGroup]="form0"  >
+            <formly-form [model]="model0" [fields]="fields0" [options]="options0" [form]="form0"></formly-form>
+           
+         
+          </form>
+        <div fxLayout="row" fxLayoutAlign="center center" class="bottom-btn"  fxLayoutGap="20px">
+            <div>
+                <button mat-raised-button style="width: 130px !important;">Cancel</button>
+            </div>
+            <div>
+               
+                <button mat-raised-button color="primary" style="width: 130px !important;" (click)="saveIacStack()">Save</button>
+            </div>
+            <div>
+               
+                <button mat-raised-button matStepperNext color="primary" style="width: 130px !important;" (click)="saveIacStack()">Save & Next</button>
+            </div>
+        </div>
+     
+
+       
+     
+    </mat-step>
+
+    <mat-step *ngIf="stackdetail_bool" label="Stack Details" state="chat">
+        <!-- <app-stack-details></app-stack-details> -->
+        <br><br>
+        <form [formGroup]="form1">
+    <formly-form [model]="model1" [fields]="fields1" [options]="options1" [form]="form1"></formly-form>
+   
+    <div fxLayout="row" fxLayoutAlign="center center" class="bottom-btn"  fxLayoutGap="20px">
+        <div>
+            <button mat-raised-button style="width: 130px !important;">Cancel</button>
+        </div>
+        <div>
+           
+            <button type="submit"  mat-raised-button color="primary" style="width: 130px !important;" (click)="saveStackDetails()">Save</button>
+        </div>
+        <div>
+           
+            <button type="submit"  mat-raised-button matStepperNext color="primary" style="width: 130px !important;" (click)="saveStackDetails()">Save & Next</button>
+        </div>
+    </div>
+        </form>
+      <br><br>
+       
+        <!-- <div >
+            <div fxLayout="row" fxLayoutGap="30px">
+                <div  fxFlex="33">
+                    <mat-form-field style="width: 100%;" appearance="outline" >
+               
+                       
+                        <input type="text" matInput placeholder="Name">
+                       
+                      </mat-form-field>
+                </div>
+                <div  fxFlex="33">
+                    <mat-form-field style="width: 100%;" appearance="outline" >
+               
+                       
+                        <input type="text" matInput placeholder="Short Description">
+                       
+                      </mat-form-field>
+                </div>
+                <div  fxFlex="33">
+                    <mat-form-field style="width: 100%;" appearance="outline" >
+               
+                       
+                        <input type="text" matInput placeholder="Stack Name">
+                       
+                      </mat-form-field>
+                </div>
+        
+             </div>
+             <div fxLayout="row" fxLayoutGap="30px">
+                <div  fxFlex="33">
+                    <mat-form-field style="width: 100%;" appearance="outline" >
+               
+                       
+                        <input type="text" matInput placeholder="Region">
+                       
+                      </mat-form-field>
+                </div>
+                <div  fxFlex="33">
+                    <mat-form-field style="width: 100%;" appearance="outline" >
+               
+                       
+                        <input type="text" matInput placeholder="VPC Name">
+                       
+                      </mat-form-field>
+                </div>
+                <div  fxFlex="33">
+                    <mat-form-field style="width: 100%;" appearance="outline" >
+               
+                       
+                        <input type="text" matInput placeholder="VPC CIDR">
+                       
+                      </mat-form-field>
+                </div>
+        
+             </div>
+             <div fxLayout="row" fxLayoutGap="30px">
+                <div  fxFlex="33">
+                    <mat-form-field style="width: 100%;" appearance="outline" >
+               
+                       
+                        <input type="text" matInput placeholder="Number of Avalaibility Zone">
+                       
+                      </mat-form-field>
+                </div>
+                <div  fxFlex="33">
+                    <mat-form-field style="width: 100%;" appearance="outline" >
+               
+                       
+                        <input type="text" matInput placeholder="Number of Subnet">
+                       
+                      </mat-form-field>
+                </div>
+                <div  fxFlex="33">
+                    <mat-form-field style="width: 100%;" appearance="outline" >
+               
+                       
+                        <input type="text" matInput placeholder="Number of Security Group">
+                       
+                      </mat-form-field>
+                </div>
+        
+             </div>
+             <div fxLayout="row" fxLayoutGap="30px">
+                <div  fxFlex="33">
+                    <mat-form-field style="width: 100%;" appearance="outline" >
+               
+                       
+                        <input type="text" matInput placeholder="Number of Instance">
+                       
+                      </mat-form-field>
+                </div>
+                <div  fxFlex="33">
+                   
+                </div>
+                <div  fxFlex="33">
+                   
+                </div>
+        
+             </div>
+             <div fxLayout="row" fxLayoutAlign="center center" class="bottom-btn"  fxLayoutGap="20px">
+                <div>
+                    <button mat-raised-button matStepperPrevious style="width: 130px !important;">Cancel</button>
+                </div>
+                <div>
+                   
+                    <button  mat-raised-button color="primary" style="width: 130px !important;">Save</button>
+                </div>
+                <div>
+                   
+                    <button  mat-raised-button matStepperNext color="primary" style="width: 130px !important;">Save & Next</button>
+                </div>
+            </div>
+
+
+        </div> -->
+
+     
+
+    </mat-step>
+    <mat-step *ngIf="avalaiZone_bool" label="Avalaibility Zone">
+        <!-- <app-availability-zone></app-availability-zone> -->
+        <br><br>
+        <div>
+            <h2>Availability Zone</h2>
+        </div>
+      <div>
+       
+        <form [formGroup]="azform">
+        <p>Availability Zone</p>
+        <formly-form [model]="azmodel" [fields]="azfields" [options]="azoptions" [form]="azform"></formly-form>
+        </form>
+    
+   
+
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center center" class="bottom-btn"  fxLayoutGap="20px">
+    <div>
+        <button mat-raised-button style="width: 130px !important;">Cancel</button>
+    </div>
+    <div>
+       
+        <button type="submit"  mat-raised-button color="primary" style="width: 130px !important;" (click)="saveAvailabilitZone()">Save</button>
+    </div>
+    <div>
+       
+        <button type="submit"  mat-raised-button matStepperNext color="primary" style="width: 130px !important;" (click)="saveAvailabilitZone()">Save & Next</button>
+    </div>
+        </div>
+
+       
+
+     
+    </mat-step>
+
+      <mat-step *ngIf="subnet_bool" label="Subnet">
+        <br><br>
+        <div>
+            <h2>Subnet</h2>
+        </div>
+        <div>
+        <form [formGroup]="snform3"  >
+           
+            <formly-form [model]="snmodel3" [fields]="snfields3" [options]="snoptions3" [form]="snform3"></formly-form>
+           
+           
+          </form>
+        
+       
+    
+            </div>
+            <div fxLayout="row" fxLayoutAlign="center center" class="bottom-btn"  fxLayoutGap="20px">
+        <div>
+            <button mat-raised-button style="width: 130px !important;">Cancel</button>
+        </div>
+        <div>
+           
+            <button type="submit"  mat-raised-button color="primary" style="width: 130px !important;" (click)="saveSubnetDetails()">Save</button>
+        </div>
+        <div>
+           
+            <button type="submit"  mat-raised-button matStepperNext color="primary" style="width: 130px !important;" (click)="saveSubnetDetails()">Save & Next</button>
+        </div>
+            </div>
+    
+         
+        <!-- <div>
+            <div>
+                <h2>Subnet</h2>
+            </div>
+            <p>Subnet 1</p>
+            <div fxLayout="row" fxLayoutGap="30px">
+               
+                <div  fxFlex="33">
+                    <mat-form-field style="width: 100%;" appearance="outline" >
+               
+                       
+                        <input type="text" matInput placeholder="Name">
+                       
+                      </mat-form-field>
+                </div>
+                <div  fxFlex="33">
+                    <mat-form-field style="width: 100%;" appearance="outline" >
+               
+                       
+                        <input type="text" matInput placeholder="Short Description">
+                       
+                      </mat-form-field>
+                </div>
+                <div  fxFlex="33">
+                    <mat-form-field style="width: 100%;" appearance="outline" >
+               
+                       
+                        <input type="text" matInput placeholder="CIDR">
+                       
+                      </mat-form-field>
+                </div>
+        
+             </div>
+             <div fxLayout="row" fxLayoutGap="30px">
+               
+                <div  fxFlex="33">
+                    <mat-form-field style="width: 100%;" appearance="outline" >
+               
+                       
+                        <input type="text" matInput placeholder="Subnet Type">
+                       
+                      </mat-form-field>
+                </div>
+                <div  fxFlex="33">
+                   
+                </div>
+                <div  fxFlex="33">
+                   
+                </div>
+        
+             </div>
+
+             <p>Subnet 2</p>
+             <div fxLayout="row" fxLayoutGap="30px">
+                
+                 <div  fxFlex="33">
+                     <mat-form-field style="width: 100%;" appearance="outline" >
+                
+                        
+                         <input type="text" matInput placeholder="Name">
+                        
+                       </mat-form-field>
+                 </div>
+                 <div  fxFlex="33">
+                     <mat-form-field style="width: 100%;" appearance="outline" >
+                
+                        
+                         <input type="text" matInput placeholder="Short Description">
+                        
+                       </mat-form-field>
+                 </div>
+                 <div  fxFlex="33">
+                     <mat-form-field style="width: 100%;" appearance="outline" >
+                
+                        
+                         <input type="text" matInput placeholder="CIDR">
+                        
+                       </mat-form-field>
+                 </div>
+         
+              </div>
+              <div fxLayout="row" fxLayoutGap="30px">
+                
+                <div  fxFlex="33">
+                    <mat-form-field style="width: 100%;" appearance="outline" >
+               
+                       
+                        <input type="text" matInput placeholder="Subnet Type">
+                       
+                      </mat-form-field>
+                </div>
+                <div  fxFlex="33">
+                  
+                </div>
+                <div  fxFlex="33">
+                   
+                </div>
+        
+             </div>
+
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center center" class="bottom-btn"  fxLayoutGap="20px">
+            <div>
+                <button mat-raised-button matStepperPrevious style="width: 130px !important;">Cancel</button>
+            </div>
+            <div>
+               
+                <button  mat-raised-button color="primary" style="width: 130px !important;">Save</button>
+            </div>
+            <div>
+               
+                <button  mat-raised-button matStepperNext color="primary" style="width: 130px !important;">Save & Next</button>
+            </div>
+        </div> -->
+        
+       
+      </mat-step>
+      <mat-step  *ngIf="sg_bool"  label="Security Group">
+        <br><br>
+        <div>
+            <h2>Security Group</h2>
+        </div>
+        <div>
+        <form [formGroup]="sgform4"  >
+           
+            <formly-form [model]="sgmodel4" [fields]="sgfields4" [options]="sgoptions4" [form]="sgform4"></formly-form>
+           
+           
+          </form>
+        
+       
+    
+            </div>
+  <div fxLayout="row" fxLayoutAlign="center center" class="bottom-btn"  fxLayoutGap="20px">
+        <div>
+            <button mat-raised-button style="width: 130px !important;">Cancel</button>
+        </div>
+        <div>
+           
+            <button type="submit"  mat-raised-button color="primary" style="width: 130px !important;" (click)="saveSecurityGroupDetails()">Save</button>
+        </div>
+        <div>
+           
+            <button type="submit"  mat-raised-button matStepperNext color="primary" style="width: 130px !important;" (click)="saveSecurityGroupDetails()">Save & Next</button>
+        </div>
+            </div>
+
+        
+        <!-- <div>
+            <div>
+                <h2>Security Group</h2>
+            </div>
+            <p>Security Group 1</p>
+            <div fxLayout="row" fxLayoutGap="30px">
+               
+                <div  fxFlex="33">
+                    <mat-form-field style="width: 100%;" appearance="outline" >
+               
+                       
+                        <input type="text" matInput placeholder="Name">
+                       
+                      </mat-form-field>
+                </div>
+                <div  fxFlex="33">
+                    <mat-form-field style="width: 100%;" appearance="outline" >
+               
+                       
+                        <input type="text" matInput placeholder="Short Description">
+                       
+                      </mat-form-field>
+                </div>
+                <div  fxFlex="33">
+                    <mat-form-field style="width: 100%;" appearance="outline" >
+               
+                       
+                        <input type="text" matInput placeholder="Outbound">
+                       
+                      </mat-form-field>
+                </div>
+        
+             </div>
+             <div fxLayout="row" fxLayoutGap="30px">
+               
+                <div  fxFlex="33">
+                    <mat-form-field style="width: 100%;" appearance="outline" >
+               
+                       
+                        <input type="text" matInput placeholder="Inbound">
+                       
+                      </mat-form-field>
+                </div>
+                <div  fxFlex="33">
+                   
+                </div>
+                <div  fxFlex="33">
+                   
+                </div>
+        
+             </div>
+
+             <p>Security Group 2</p>
+             <div fxLayout="row" fxLayoutGap="30px">
+                
+                 <div  fxFlex="33">
+                     <mat-form-field style="width: 100%;" appearance="outline" >
+                
+                        
+                         <input type="text" matInput placeholder="Name">
+                        
+                       </mat-form-field>
+                 </div>
+                 <div  fxFlex="33">
+                     <mat-form-field style="width: 100%;" appearance="outline" >
+                
+                        
+                         <input type="text" matInput placeholder="Short Description">
+                        
+                       </mat-form-field>
+                 </div>
+                 <div  fxFlex="33">
+                     <mat-form-field style="width: 100%;" appearance="outline" >
+                
+                        
+                         <input type="text" matInput placeholder="Outbound">
+                        
+                       </mat-form-field>
+                 </div>
+         
+              </div>
+              <div fxLayout="row" fxLayoutGap="30px">
+                
+                <div  fxFlex="33">
+                    <mat-form-field style="width: 100%;" appearance="outline" >
+               
+                       
+                        <input type="text" matInput placeholder="Inbound">
+                       
+                      </mat-form-field>
+                </div>
+                <div  fxFlex="33">
+                  
+                </div>
+                <div  fxFlex="33">
+                   
+                </div>
+        
+             </div>
+
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center center" class="bottom-btn"  fxLayoutGap="20px">
+            <div>
+                <button mat-raised-button matStepperPrevious style="width: 130px !important;">Cancel</button>
+            </div>
+            <div>
+               
+                <button  mat-raised-button color="primary" style="width: 130px !important;">Save</button>
+            </div>
+            <div>
+               
+                <button  mat-raised-button matStepperNext color="primary" style="width: 130px !important;">Save & Next</button>
+            </div>
+        </div> -->
+
+
+      
+      </mat-step>
+      <mat-step *ngIf="io_bool"  label="Inbound Outbound Rule">
+        <br><br>
+        <div>
+            <h2>Inbound Outbound Rule</h2>
+        </div>
+        <div>
+        <form [formGroup]="ioform6"  >
+           
+            <formly-form [model]="iomodel6" [fields]="iofields6" [options]="iooptions6" [form]="ioform6"></formly-form>
+           
+           
+          </form>
+        
+       
+    
+            </div>
+  <div fxLayout="row" fxLayoutAlign="center center" class="bottom-btn"  fxLayoutGap="20px">
+        <div>
+            <button mat-raised-button style="width: 130px !important;">Cancel</button>
+        </div>
+        <div>
+           
+            <button type="submit"  mat-raised-button color="primary" style="width: 130px !important;" (click)="saveInboundOutbound()">Save</button>
+        </div>
+        <div>
+           
+            <button type="submit"  mat-raised-button matStepperNext color="primary" style="width: 130px !important;" (click)="saveInboundOutbound()">Save & Next</button>
+        </div>
+            </div>
+
+      
+
+      
+      </mat-step>
+      <mat-step *ngIf="pa_bool" label="Public Address">
+        <br><br>
+        <div>
+            <h2>Public Address</h2>
+        </div>
+        <div>
+        <form [formGroup]="paform7"  >
+           
+            <formly-form [model]="pamodel7" [fields]="pafields7" [options]="paoptions7" [form]="paform7"></formly-form>
+           
+           
+          </form>
+        
+       
+    
+            </div>
+  <div fxLayout="row" fxLayoutAlign="center center" class="bottom-btn"  fxLayoutGap="20px">
+        <div>
+            <button mat-raised-button style="width: 130px !important;">Cancel</button>
+        </div>
+        <div>
+           
+            <button type="submit"  mat-raised-button color="primary" style="width: 130px !important;" (click)="savePublicAddress()">Save</button>
+        </div>
+        <div>
+           
+            <button type="submit"  mat-raised-button matStepperNext color="primary" style="width: 130px !important;" (click)="savePublicAddress()">Save & Next</button>
+        </div>
+            </div>
+
+      
+
+      
+      </mat-step>
+      <mat-step *ngIf="net_in_bool" label="Network Interface">
+        <br><br>
+        <div>
+            <h2>Network Interface</h2>
+        </div>
+        <div>
+        <form [formGroup]="niform5"  >
+           
+            <formly-form [model]="nimodel5" [fields]="nifields5" [options]="nioptions5" [form]="niform5"></formly-form>
+           
+           
+          </form>
+        
+       
+    
+            </div>
+        <div fxLayout="row" fxLayoutAlign="center center" class="bottom-btn"  fxLayoutGap="20px">
+        <div>
+            <button mat-raised-button style="width: 130px !important;">Cancel</button>
+        </div>
+        <div>
+           
+            <button type="submit"  mat-raised-button color="primary" style="width: 130px !important;" (click)="saveNetworkInterface()">Save</button>
+        </div>
+        <div>
+           
+            <button type="submit"  mat-raised-button matStepperNext color="primary" style="width: 130px !important;" (click)="saveNetworkInterface()">Save & Next</button>
+        </div>
+            </div>
+
+  
+
+      
+      </mat-step>
+      
+      <mat-step *ngIf="launch_bool" label="Launch Instance">
+        <div class="container">
+           
+            <div fxLayout="row"  fxLayoutAlign="start center">
+                <button mat-icon-button>
+                    <mat-icon class="" style="font-size: 24px; color:orange" aria-hidden="false" aria-label="how_to_reg">storage</mat-icon>
+              
+                  </button> 
+                  <h3 style="margin-top: 15px;">Launch Instance</h3>
+            </div>
+           
+           
+            <br>
+           
+            <div  fxLayout="column"   fxLayoutGap="10px">
+                <div fxLayout="row">
+                    <div fxFlex="40">
+                        <form [formGroup]="liform9"  >
+                            <formly-form [model]="limodel9" [fields]="lifields9" [options]="lioptions9" [form]="liform9"></formly-form>
+                           </form>
+        
+                    </div>
+                    <div fxFlex="60">
+        
+                    </div>
+        
+                </div>
+        
+              
+        
+           
+               
+               
+          
+              </div>
+              <div fxLayout="row" fxLayoutAlign="center center" class="bottom-btn"  fxLayoutGap="20px">
+                <div>
+                    <button mat-raised-button style="width: 130px !important;">Cancel</button>
+                </div>
+                <div>
+                   
+                    <button  mat-raised-button color="primary" style="width: 130px !important;" (click)="launchInstance()">Launch</button>
+                </div>
+            </div>
+          
+        
+           
+        </div>
+  
+
+      
+      </mat-step>
+  
+    <!-- Icon overrides. -->
+    <!-- <ng-template matStepperIcon="phone">
+      <mat-icon>call_end</mat-icon>
+    </ng-template>
+    <ng-template matStepperIcon="chat">
+      <mat-icon>forum</mat-icon>
+    </ng-template> -->
+  </mat-stepper>
+  
+      </div>
+  
+  
+   <br><br>
+  
+
+   
+</div>

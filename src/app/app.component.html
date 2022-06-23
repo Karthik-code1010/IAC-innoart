@@ -1,0 +1,45 @@
+<mat-toolbar color="primary" class="mat-elevation-z5">
+  <mat-toolbar-row>
+      <button  (click)="toggleNav(sidenav)" type="button" aria-label="Toggle sidenav" mat-icon-button>
+      <mat-icon aria-hidden="false" aria-label="Side nav toggle icon">menu</mat-icon>
+    </button>
+    <span class="fill-remaining-space"></span>
+    <button mat-icon-button>
+      <mat-icon class="vap-icon" aria-hidden="false" aria-label="settings">settings</mat-icon>
+
+    </button>
+    <button mat-icon-button>
+      <mat-icon class="vap-icon" aria-hidden="false" aria-label="Example home icon">home</mat-icon>
+
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode='side' opened class="vertical-menu">
+    <mat-nav-list style="width: 70px;" class="icn_log">
+      <br>
+      <a mat-list-item routerLink="infrastructure" > 
+        <mat-icon class="icon-display">people</mat-icon>&nbsp;
+      </a>
+      <br>
+      <a mat-list-item routerLink="launsh-instance">
+        <mat-icon  class="icon-display">group_work</mat-icon>&nbsp;
+      </a>
+      <br>
+      <a mat-list-item routerLink="group-permission">
+        <mat-icon class="icon-display">lock</mat-icon>&nbsp; 
+      </a>
+     
+    </mat-nav-list>
+
+  </mat-sidenav>
+<mat-sidenav-content>
+   <!-- <div [@routeAnimations]="getRouteAnimationData()" style="height: 85vh;">
+      <router-outlet></router-outlet>
+   </div> -->
+   <div [@fadeAnimation]="o.isActivated ? o.activatedRoute : ''" style="height: 85vh;">
+    <router-outlet #o="outlet"></router-outlet>
+   </div>
+</mat-sidenav-content>
+
+</mat-sidenav-container>

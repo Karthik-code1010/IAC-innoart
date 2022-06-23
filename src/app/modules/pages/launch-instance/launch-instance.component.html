@@ -1,0 +1,49 @@
+<div class="container">
+    <h1 class="head-txt">
+        Infrastructure as Code
+    </h1>
+    <div fxLayout="row"  fxLayoutAlign="start center">
+        <button mat-icon-button>
+            <mat-icon class="" style="font-size: 24px; color:orange" aria-hidden="false" aria-label="how_to_reg">storage</mat-icon>
+      
+          </button> 
+          <h3 style="margin-top: 15px;">Launch Instance</h3>
+    </div>
+   
+   
+    <br>
+   
+    <div  fxLayout="column"   fxLayoutGap="10px">
+        <div fxLayout="row">
+            <div fxFlex="40">
+                <form [formGroup]="form"  >
+                    <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form"></formly-form>
+                   </form>
+
+            </div>
+            <div fxFlex="60">
+
+            </div>
+
+        </div>
+
+      
+
+   
+       
+       
+  
+      </div>
+      <div fxLayout="row" fxLayoutAlign="center center" class="bottom-btn"  fxLayoutGap="20px">
+        <div>
+            <button mat-raised-button style="width: 130px !important;">Cancel</button>
+        </div>
+        <div>
+           
+            <button  mat-raised-button color="primary" style="width: 130px !important;" (click)="launchInstance()">Launch</button>
+        </div>
+    </div>
+  
+
+   
+</div>

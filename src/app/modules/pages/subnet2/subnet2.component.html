@@ -1,0 +1,176 @@
+<div class="container">
+    <h1 class="head-txt">
+        Subnets (2)
+    </h1>
+  
+   
+    <br>
+   
+    <div  fxLayout="row" fxLayout.sm="column"  fxLayout.xs="column"  fxLayoutGap="30px" fxLayoutAlign="space-between center" >
+        <div fxLayout="column">
+           
+          <div>
+              <mat-form-field class="identity-input" appearance="outline" >
+         
+                  <mat-icon matSuffix class="color-blue">search</mat-icon>
+                  <input type="tel" matInput placeholder="Search"  (change)="searchSubnet()" [(ngModel)]="searchSub">
+                 
+                </mat-form-field>
+          </div>
+        </div>
+      
+       
+  
+      </div>
+      <div  fxLayout="row" fxLayoutAlign="end center" >
+        <div style="margin-top: -15px;">
+            <button mat-icon-button>
+                <mat-icon class="vap-icon" aria-hidden="false" aria-label="create">call_to_action</mat-icon>
+          
+              </button>
+              <button mat-icon-button>
+                <mat-icon class="vap-icon" aria-hidden="false" aria-label="visibility">call_to_action</mat-icon>
+          
+              </button>
+              <button mat-icon-button>
+                <mat-icon class="vap-icon" aria-hidden="false" aria-label="">refresh</mat-icon>
+          
+              </button>
+        </div> 
+        <div>
+          <h4>Choose required columns</h4>
+        </div>
+        <div fxFlexAlign="center" style="margin-top: -15px;">
+          <button mat-icon-button (click)="settingClick1()">
+            <mat-icon class="vap-icon" aria-hidden="false" aria-label="view_column">view_column</mat-icon>
+      
+          </button>
+       
+        </div>
+      </div>
+    
+   <div fxLayout="row" fxLayout.sm="column"  fxLayout.xs="column" >
+    <table mat-table [dataSource]="subnetData" class="mat-elevation-z8">
+
+        <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+      
+        <!-- Position Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> <div fxLayout="row"> <mat-icon style="font-size: 20px; color:orange">tag</mat-icon>ID </div>  </th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+      
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.name.value}} </td>
+        </ng-container>
+      
+        <!-- Weight Column -->
+        <ng-container matColumnDef="vpc">
+          <th mat-header-cell *matHeaderCellDef>  <div fxLayout="row"> VPC</div>   </th>
+          <td mat-cell *matCellDef="let element"> {{element.refStackDetail.value}} </td>
+        </ng-container>
+      
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="cidr">
+          <th mat-header-cell *matHeaderCellDef>
+                <div fxLayout="row"> <mat-icon style="font-size: 20px; color:orange"></mat-icon>CIDR</div>   </th>
+          <td mat-cell *matCellDef="let element"> {{element.cidr.value}} </td>
+        </ng-container>
+        <ng-container matColumnDef="subnettype">
+          <th mat-header-cell *matHeaderCellDef>  <div fxLayout="row"> <mat-icon style="font-size: 20px; color:orange"></mat-icon>Subnet Type</div>   </th>
+          <td mat-cell *matCellDef="let element"> {{element.subnetType.value}} </td>
+        </ng-container>
+        <ng-container matColumnDef="createdon">
+          <th mat-header-cell *matHeaderCellDef> <div fxLayout="row"> <mat-icon style="font-size: 20px; color:orange">watch_later</mat-icon>Created On</div> </th>
+          <td mat-cell *matCellDef="let element"> {{element.createdAt}} </td>
+        </ng-container>
+        <ng-container matColumnDef="createdby">
+            <th mat-header-cell *matHeaderCellDef> <div fxLayout="row"> <mat-icon style="font-size: 20px; color:orange">person</mat-icon>Created By</div> </th>
+            <td mat-cell *matCellDef="let element"> {{element.createdBy.value}} </td>
+          </ng-container>
+          <ng-container matColumnDef="state">
+            <th mat-header-cell *matHeaderCellDef> <div fxLayout="row"> <mat-icon style="font-size: 20px; color:orange">cloud_sync</mat-icon>State</div> </th>
+            <td mat-cell *matCellDef="let element"> {{element.status.value}} </td>
+          </ng-container>
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef> <div fxLayout="row"> <mat-icon style="font-size: 20px; color:orange">call_to_action</mat-icon>Action</div>  </th>
+          <td mat-cell *matCellDef="let element">
+          <div>
+            <button mat-icon-button>
+              <mat-icon class="vap-icon" aria-hidden="false" aria-label="create">create</mat-icon>
+        
+            </button>
+            <button mat-icon-button>
+              <mat-icon class="vap-icon" aria-hidden="false" aria-label="visibility">visibility</mat-icon>
+        
+            </button>
+          
+       
+          </div>  
+          </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"  (click)="getRowRecord(row)"></tr>
+      </table>
+    
+    
+
+   </div>
+   <br><br>
+   
+   <div *ngIf="subnetrowData.id" fxLayout="row">
+    <mat-tab-group mat-align-tabs="start" fxFlex="100">
+        <mat-tab label="Details">
+
+            <div fxLayout="column" style="margin-left: 20px;margin-top:10px">
+                <div>
+                    <h3>Details</h3>
+                </div>
+                <div fxLayout="row">
+                    <div fxFlex="50">
+                        <div fxLayout="row"  fxLayoutGap="20px">
+                            <b fxFlex="50">Subnet Id</b> <p fxFlex="50">{{subnetrowData.id}}</p>
+                        </div>
+                        <div fxLayout="row"  fxLayoutGap="20px">
+                            <b fxFlex="50">Subnet Name</b> <p fxFlex="50">{{subnetrowData.name.value}}</p>
+                        </div>
+
+                        <div fxLayout="row"  fxLayoutGap="20px">
+                            <b fxFlex="50">State</b> <p fxFlex="50">{{subnetrowData.status.value}}</p>
+                        </div>
+                        <div fxLayout="row"  fxLayoutGap="20px">
+                            <b fxFlex="50">VPC</b> <p fxFlex="50">vpc-32824c59</p>
+                        </div>
+                     
+                        <div fxLayout="row"  fxLayoutGap="20px">
+                            <b fxFlex="50">CIDR</b> <p fxFlex="50">192.168.120.0/24</p>
+                        </div>
+                        <div fxLayout="row"  fxLayoutGap="20px">
+                            <b fxFlex="50">Availability Zone</b> <p fxFlex="50">us-east-1st</p>
+                        </div>
+
+                    </div>
+                    <div fxFlex="50">
+                      
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </mat-tab>
+        <mat-tab label="Route Table">Content 2</mat-tab>
+        <mat-tab label="CIDR Reservations">Content 2</mat-tab>
+      
+ 
+      </mat-tab-group>
+
+   </div>
+
+   
+</div>

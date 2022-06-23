@@ -1,0 +1,8 @@
+{
+    "/vpc": {
+
+           "target": "http://localhost:1001",
+
+           "secure": false
+    }
+}

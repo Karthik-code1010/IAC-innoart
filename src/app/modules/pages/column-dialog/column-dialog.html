@@ -1,0 +1,16 @@
+<div class="c-dialog palette4">
+  <form [formGroup]="form">
+    <h2 mat-dialog-title>List of Columns</h2>
+    <div class="c-dialog-content">
+      <div formArrayName="columns" *ngFor="let column of columnFormArray.controls; let i = index">
+        <mat-checkbox [formControlName]="i">
+          {{checkColumns[i].displayName ? checkColumns[i].displayName : checkColumns[i].name}}
+        </mat-checkbox>
+      </div>
+    </div>
+    <mat-dialog-actions align="center">
+      <button mat-raised-button color="primary" mat-dialog-close>Cancel</button>
+      <button mat-raised-button color="primary" mat-dialog-close (click)="submit()">Ok</button>
+    </mat-dialog-actions>
+  </form>
+</div>

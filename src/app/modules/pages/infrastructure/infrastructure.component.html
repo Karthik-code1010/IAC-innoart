@@ -1,0 +1,788 @@
+<div class="container">
+    <h1 class="head-txt">
+        Infrastructure as Code
+    </h1>
+    <h3>VPC (2)</h3>
+   
+    <br>
+   
+    <div  fxLayout="row" fxLayout.sm="column"  fxLayout.xs="column"  fxLayoutGap="30px" fxLayoutAlign="space-between center" >
+        <div fxLayout="column">
+           
+          <div>
+              <mat-form-field class="identity-input" appearance="outline" >
+         
+                  <mat-icon matSuffix class="color-blue">search</mat-icon>
+                  <input type="tel" matInput placeholder="Search" (change)="searchVPC()" [(ngModel)]="searchname">
+                 
+                </mat-form-field>
+          </div>
+        </div>
+        <div fxLayout="column">
+         
+          <div>
+              <button  mat-raised-button color="primary" (click)="goPage('iac-stack')">
+                  <mat-icon>person</mat-icon> 
+                  Create Iac Stack
+              </button>
+          </div>
+        </div>
+       
+  
+      </div>
+      <div  fxLayout="row" fxLayoutAlign="end center" >
+        <div style="margin-top: -15px;">
+          <button mat-icon-button>
+              <mat-icon class="vap-icon" aria-hidden="false" aria-label="create">call_to_action</mat-icon>
+        
+            </button>
+            <button mat-icon-button>
+              <mat-icon class="vap-icon" aria-hidden="false" aria-label="visibility">call_to_action</mat-icon>
+        
+            </button>
+        
+      </div>  
+        <div>
+          <h4>Choose required columns</h4>
+        </div>
+        <div fxFlexAlign="center" style="margin-top: -15px;">
+          <button mat-icon-button (click)="settingClick1()">
+            <mat-icon class="vap-icon" aria-hidden="false" aria-label="view_column">view_column</mat-icon>
+      
+          </button>
+       
+        </div>
+      </div>
+    
+   <div fxLayout="column" fxLayout.sm="column"  fxLayout.xs="column" >
+    <table mat-table [dataSource]="stackDetailsData" class="mat-elevation-z8">
+
+        <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+      
+        <!-- Position Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> <div fxLayout="row"> <mat-icon style="font-size: 20px; color:orange">tag</mat-icon>ID </div>  </th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+      
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.name.value}} </td>
+        </ng-container>
+      
+        <!-- Weight Column -->
+        <ng-container matColumnDef="shortdesk">
+          <th mat-header-cell *matHeaderCellDef>  <div fxLayout="row"> <mat-icon style="font-size: 20px; color:orange">south_america</mat-icon>Short Description</div>   </th>
+          <td mat-cell *matCellDef="let element"> {{element.shortDescription.value}} </td>
+        </ng-container>
+      
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="stackpath">
+          <th mat-header-cell *matHeaderCellDef>
+                <div fxLayout="row"> <mat-icon style="font-size: 20px; color:orange">cloud_circle</mat-icon>Stack</div>   </th>
+          <td mat-cell *matCellDef="let element"> {{element.stack.value}} </td>
+        </ng-container>
+        <ng-container matColumnDef="cloundenv">
+          <th mat-header-cell *matHeaderCellDef>  <div fxLayout="row"> <mat-icon style="font-size: 20px; color:orange">language</mat-icon>Cloudenv</div>   </th>
+          <td mat-cell *matCellDef="let element"> {{element.cloudenv.value}} </td>
+        </ng-container>
+        <ng-container matColumnDef="stacknum">
+          <th mat-header-cell *matHeaderCellDef> <div fxLayout="row"> <mat-icon style="font-size: 20px; color:orange">watch_later</mat-icon>Stack Number</div> </th>
+          <td mat-cell *matCellDef="let element"> {{element.stacknumber.value }} </td>
+        </ng-container>
+        <ng-container matColumnDef="cloudAccountNum">
+            <th mat-header-cell *matHeaderCellDef> <div fxLayout="row"> <mat-icon style="font-size: 20px; color:orange">person</mat-icon>Cloud Accound Number</div> </th>
+            <td mat-cell *matCellDef="let element">  {{element.cloudAccountNumber.value }} </td>
+          </ng-container>
+          <ng-container matColumnDef="cteatedat">
+            <th mat-header-cell *matHeaderCellDef> <div fxLayout="row"> <mat-icon style="font-size: 20px; color:orange">cloud_sync</mat-icon>Created At</div> </th>
+            <td mat-cell *matCellDef="let element"> {{element.createdAt | date:dataService.DATEFORMAT}} </td>
+          </ng-container>
+          <ng-container matColumnDef="createdby">
+            <th mat-header-cell *matHeaderCellDef> <div fxLayout="row"> <mat-icon style="font-size: 20px; color:orange">cloud_sync</mat-icon>Created By</div> </th>
+            <td mat-cell *matCellDef="let element">  </td>
+          </ng-container>
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef> <div fxLayout="row"> <mat-icon style="font-size: 20px; color:orange">call_to_action</mat-icon>Action</div>  </th>
+          <td mat-cell *matCellDef="let element">
+          <div> 
+          
+            <button mat-icon-button matTooltip="Create Template" (click)="callVPCAPI(element.id,element.name.value,element.stack.value,element.cloudenv.value)" >
+              <mat-icon class="vap-icon" aria-hidden="false" aria-label="create">integration_instructions</mat-icon>
+        
+            </button>
+            <button mat-icon-button (click)="deployAPI(element.id,element.name.value,element.stack.value,element.cloudenv.value)" matTooltip="Deploy">
+              <mat-icon class="vap-icon" aria-hidden="false" aria-label="create">play_circle_filled_white</mat-icon>
+        
+            </button>
+            <button *ngIf="element.cloudenv.value == 'aws'" mat-icon-button matTooltip="Call Shell API" (click)="seperateApiCall(element.id,element.name.value,element.stack.value,element.cloudenv.value)">
+              <mat-icon class="vap-icon" aria-hidden="false" aria-label="visibility">local_laundry_service</mat-icon>
+        
+            </button>
+            <button *ngIf="element.cloudenv.value == 'azure'" mat-icon-button >
+              <mat-icon class="vap-icon" aria-hidden="false" aria-label="visibility"></mat-icon>
+        
+            </button>
+            <button mat-icon-button matTooltip="Status" [id]="element.id"  (click)="apiStatusCheck(element.id,stackStatus,element.stack.value,element.cloudenv.value)">
+              <mat-icon class="vap-icon" aria-hidden="false" aria-label="create">flag</mat-icon>
+        
+            </button>
+            <button mat-icon-button matTooltip="Edit" (click)="editIacDetails(element.id,element.stack.value)">
+              <mat-icon class="vap-icon" aria-hidden="false" aria-label="create">create</mat-icon>
+        
+            </button>
+          
+            <!-- <button mat-icon-button matTooltip="View" (click)="viewApiValues(element.id)">
+              <mat-icon class="vap-icon" aria-hidden="false" aria-label="how_to_reg">visibility</mat-icon>
+        
+            </button> -->
+          
+       
+          </div>  
+          </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="getRowRecord(row)"></tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10,15, 20,25,30,35,40,45,50]"
+      showFirstLastButtons 
+      aria-label="Select page of periodic elements"  (page)="pageChanged($event)" >
+</mat-paginator>
+    
+    
+
+   </div>
+   <br><br>
+    
+      <div *ngIf="rowPathVal == 'VPC'" fxLayout="row">
+    <mat-tab-group mat-align-tabs="start" fxFlex="100">
+        <mat-tab label="IacStack">
+
+            <div fxLayout="column" style="margin-left: 20px;margin-top:10px">
+                <div>
+                    <h3>Details</h3>
+                </div>
+                <div fxLayout="row">
+                    <div fxFlex="50">
+                        <div fxLayout="row"  fxLayoutGap="20px">
+                            <b fxFlex="50"> Id</b> <p fxFlex="50">{{rowData['id']}}</p>
+                        </div>
+                        <div fxLayout="row"  fxLayoutGap="20px">
+                            <b fxFlex="50"> Name</b> <p fxFlex="50">{{rowData['name']['value']}}</p>
+                        </div>
+
+                        <div fxLayout="row"  fxLayoutGap="20px">
+                            <b fxFlex="50">Short Description</b> <p fxFlex="50">{{rowData['shortDescription']['value']}}</p>
+                        </div>
+                        <div fxLayout="row"  fxLayoutGap="20px">
+                            <b fxFlex="50">Cloudenv</b> <p fxFlex="50">{{rowData['cloudenv']['value']}}</p>
+                        </div>
+                     
+                        <div fxLayout="row"  fxLayoutGap="20px">
+                            <b fxFlex="50">Stack Path</b> <p fxFlex="50">{{rowData['stack']['value']}}</p>
+                        </div>
+                        <div fxLayout="row"  fxLayoutGap="20px">
+                          <b fxFlex="50">Stack Number</b> <p fxFlex="50">{{rowData['stacknumber']['value']}}</p>
+                      </div>
+                  
+                    
+
+                    </div>
+                    <div fxFlex="50">
+                    
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </mat-tab>
+        <mat-tab label="IacStackDetails">
+          <div fxLayout="row">
+            <div fxFlex="50">
+              <br>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Id</b> <p fxFlex="50">{{rowStackDetailData['id']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+              <b fxFlex="50">Name</b> <p fxFlex="50">{{rowStackDetailData['name']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Short Description</b> <p fxFlex="50">{{rowStackDetailData['shortDescription']['value']}}</p>
+              </div>
+            
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Vpc Name</b> <p fxFlex="50">{{rowStackDetailData['vpcName']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Vpc Cidr</b> <p fxFlex="50">{{rowStackDetailData['vpcCidr']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">No of AvailabilityZone</b> <p fxFlex="50">{{rowStackDetailData['noOfAvailabilityZone']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">No of Subnet</b> <p fxFlex="50">{{rowStackDetailData['noOfSubnet']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">No of Natgateways</b> <p fxFlex="50">{{rowStackDetailData['noOfNatgateways']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">No of SecurityGroups</b> <p fxFlex="50">{{rowStackDetailData['noOfSecurityGroups']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">No of Instances</b> <p fxFlex="50">{{rowStackDetailData['noOfInstances']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Status</b> <p fxFlex="50">{{rowStackDetailData['status']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Resource Status</b> <p fxFlex="50">{{rowStackDetailData['resourceStatus']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Resource Id</b> <p fxFlex="50">{{rowStackDetailData['resourceId']['value']}}</p>
+              </div>
+           
+            </div>
+            <div fxFlex="50">
+              
+
+            </div>
+          </div>
+
+        
+        </mat-tab>
+        <mat-tab label="Subnet">
+          <div fxLayout="row">
+            <div fxFlex="50">
+              <br>
+            
+                <div fxLayout="row"  fxLayoutGap="20px">
+                  <b fxFlex="50">Id</b> <p fxFlex="50">{{rowSubnetData1['id']}}</p>
+                </div>
+                <div fxLayout="row"  fxLayoutGap="20px">
+                  <b fxFlex="50">Name</b> <p fxFlex="50">{{rowSubnetData1['name']['value']}}</p>
+                </div>
+                <div fxLayout="row"  fxLayoutGap="20px">
+                  <b fxFlex="50">Short Description</b> <p fxFlex="50">{{rowSubnetData1['shortDescription']['value']}}</p>
+                </div>
+                <div fxLayout="row"  fxLayoutGap="20px">
+                  <b fxFlex="50">cidr</b> <p fxFlex="50">{{rowSubnetData1['cidr']['value']}}</p>
+                </div>
+                <div fxLayout="row"  fxLayoutGap="20px">
+                  <b fxFlex="50">subnetType</b> <p fxFlex="50">{{rowSubnetData1['subnetType']['value']}}</p>
+                </div>
+                <div fxLayout="row"  fxLayoutGap="20px">
+                  <b fxFlex="50">Status</b> <p fxFlex="50">{{rowSubnetData1['status']['value']}}</p>
+                </div>
+                <div fxLayout="row"  fxLayoutGap="20px">
+                  <b fxFlex="50">Resource Status</b> <p fxFlex="50">{{rowSubnetData1['resourceStatus']['value']}}</p>
+                </div>
+                <div fxLayout="row"  fxLayoutGap="20px">
+                  <b fxFlex="50">Resource Id</b> <p fxFlex="50">{{rowSubnetData1['resourceId']['value']}}</p>
+                </div>
+
+          
+             
+             
+           
+           
+            </div>
+            <div fxFlex="50">
+              
+
+            </div>
+          </div>
+          <div fxLayout="row">
+            <div fxFlex="50">
+              <br>
+            
+                <div fxLayout="row"  fxLayoutGap="20px">
+                  <b fxFlex="50">Id</b> <p fxFlex="50">{{rowSubnetData2['id']}}</p>
+                </div>
+                <div fxLayout="row"  fxLayoutGap="20px">
+                  <b fxFlex="50">Name</b> <p fxFlex="50">{{rowSubnetData2['name']['value']}}</p>
+                </div>
+                <div fxLayout="row"  fxLayoutGap="20px">
+                  <b fxFlex="50">Short Description</b> <p fxFlex="50">{{rowSubnetData2['shortDescription']['value']}}</p>
+                </div>
+                <div fxLayout="row"  fxLayoutGap="20px">
+                  <b fxFlex="50">cidr</b> <p fxFlex="50">{{rowSubnetData2['cidr']['value']}}</p>
+                </div>
+                <div fxLayout="row"  fxLayoutGap="20px">
+                  <b fxFlex="50">subnetType</b> <p fxFlex="50">{{rowSubnetData2['subnetType']['value']}}</p>
+                </div>
+                <div fxLayout="row"  fxLayoutGap="20px">
+                  <b fxFlex="50">Status</b> <p fxFlex="50">{{rowSubnetData2['status']['value']}}</p>
+                </div>
+                <div fxLayout="row"  fxLayoutGap="20px">
+                  <b fxFlex="50">Resource Status</b> <p fxFlex="50">{{rowSubnetData2['resourceStatus']['value']}}</p>
+                </div>
+                <div fxLayout="row"  fxLayoutGap="20px">
+                  <b fxFlex="50">Resource Id</b> <p fxFlex="50">{{rowSubnetData2['resourceId']['value']}}</p>
+                </div>
+          
+             
+             
+           
+           
+            </div>
+            <div fxFlex="50">
+              
+
+            </div>
+          </div>
+
+        
+        </mat-tab>
+       
+ 
+      </mat-tab-group>
+
+   </div> 
+   <div *ngIf="rowPathVal == 'SG'" fxLayout="row">
+    <mat-tab-group mat-align-tabs="start" fxFlex="100">
+        <mat-tab label="IacStack">
+
+            <div fxLayout="column" style="margin-left: 20px;margin-top:10px">
+                <div>
+                    <h3>Details</h3>
+                </div>
+                <div fxLayout="row">
+                  <div fxFlex="50">
+                    <div fxLayout="row"  fxLayoutGap="20px">
+                        <b fxFlex="50"> Id</b> <p fxFlex="50">{{rowData['id']}}</p>
+                    </div>
+                    <div fxLayout="row"  fxLayoutGap="20px">
+                        <b fxFlex="50"> Name</b> <p fxFlex="50">{{rowData['name']['value']?rowData['name']['value']:''}}</p>
+                    </div>
+
+                    <div fxLayout="row"  fxLayoutGap="20px">
+                        <b fxFlex="50">Short Description</b> <p fxFlex="50">{{rowData['shortDescription']['value']}}</p>
+                    </div>
+                    <div fxLayout="row"  fxLayoutGap="20px">
+                        <b fxFlex="50">Cloudenv</b> <p fxFlex="50">{{rowData['cloudenv']['value']}}</p>
+                    </div>
+                 
+                    <div fxLayout="row"  fxLayoutGap="20px">
+                        <b fxFlex="50">Stack Path</b> <p fxFlex="50">{{rowData['stack']['value']}}</p>
+                    </div>
+                    <div fxLayout="row"  fxLayoutGap="20px">
+                      <b fxFlex="50">Stack Number</b> <p fxFlex="50">{{rowData['stacknumber']['value']}}</p>
+                  </div>
+                 
+                
+
+                </div>
+                    <div fxFlex="50">
+                    
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </mat-tab>
+        <mat-tab label="IaCSecurityGRoup">
+          <div fxLayout="row">
+            <div fxFlex="50">
+              <br>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Id</b> <p fxFlex="50">{{rowSecurityGroup['id']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Name</b> <p fxFlex="50">{{rowSecurityGroup['name']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Short Description</b> <p fxFlex="50">{{rowSecurityGroup['shortDescription']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Vpc Name</b> <p fxFlex="50">{{rowSecurityGroup['vpcName']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Status</b> <p fxFlex="50">{{rowSecurityGroup['status']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Resource Status</b> <p fxFlex="50">{{rowSecurityGroup['resourceStatus']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Resource Id</b> <p fxFlex="50">{{rowSecurityGroup['resourceId']['value']}}</p>
+              </div>
+            
+           
+            </div>
+            <div fxFlex="50">
+              
+
+            </div>
+          </div>
+
+        
+        </mat-tab>
+        <mat-tab label="IaCInboundOutboundRule">
+          <div fxLayout="row">
+            <div fxFlex="50">
+              <br>
+            
+                <div fxLayout="row"  fxLayoutGap="20px">
+                  <b fxFlex="50">Id</b> <p fxFlex="50">{{inboundoutbound['id']}}</p>
+                </div>
+                <div fxLayout="row"  fxLayoutGap="20px">
+                  <b fxFlex="50">Name</b> <p fxFlex="50">{{inboundoutbound['name']['value']}}</p>
+                </div>
+                <div fxLayout="row"  fxLayoutGap="20px">
+                  <b fxFlex="50">Short Description</b> <p fxFlex="50">{{inboundoutbound['shortDescription']['value']}}</p>
+                </div>
+                <div fxLayout="row"  fxLayoutGap="20px">
+                  <b fxFlex="50">Priority</b> <p fxFlex="50">{{inboundoutbound['priority']['value']}}</p>
+                </div>
+                <div fxLayout="row"  fxLayoutGap="20px">
+                  <b fxFlex="50">Direction</b> <p fxFlex="50">{{inboundoutbound['direction']['value']}}</p>
+                </div>
+                <div fxLayout="row"  fxLayoutGap="20px">
+                  <b fxFlex="50">Protocol</b> <p fxFlex="50">{{inboundoutbound['protocol']['value']}}</p>
+                </div>
+                <div fxLayout="row"  fxLayoutGap="20px">
+                  <b fxFlex="50">Ip Address</b> <p fxFlex="50">{{inboundoutbound['ipAddress']['value']}}</p>
+                </div>
+                <div fxLayout="row"  fxLayoutGap="20px">
+                  <b fxFlex="50">Port</b> <p fxFlex="50">{{inboundoutbound['port']['value']}}</p>
+                </div>
+                <div fxLayout="row"  fxLayoutGap="20px">
+                  <b fxFlex="50">Status</b> <p fxFlex="50">{{inboundoutbound['status']['value']}}</p>
+                </div>
+                <div fxLayout="row"  fxLayoutGap="20px">
+                  <b fxFlex="50">Resource Status</b> <p fxFlex="50">{{inboundoutbound['resourceStatus']['value']}}</p>
+                </div>
+                <div fxLayout="row"  fxLayoutGap="20px">
+                  <b fxFlex="50">Resource Id</b> <p fxFlex="50">{{inboundoutbound['resourceId']['value']}}</p>
+                </div>
+            
+
+          
+             
+             
+           
+           
+            </div>
+            <div fxFlex="50">
+              
+
+            </div>
+          </div>
+
+        
+        </mat-tab>
+       
+ 
+      </mat-tab-group>
+
+   </div>  
+   
+   <div *ngIf="rowPathVal == 'IP'" fxLayout="row">
+    <mat-tab-group mat-align-tabs="start" fxFlex="100">
+        <mat-tab label="IacStack">
+
+            <div fxLayout="column" style="margin-left: 20px;margin-top:10px">
+                <div>
+                    <h3>Details</h3>
+                </div>
+                <div fxLayout="row">
+                    <div fxFlex="50">
+                        <div fxLayout="row"  fxLayoutGap="20px">
+                            <b fxFlex="50"> Id</b> <p fxFlex="50">{{rowData['id']}}</p>
+                        </div>
+                        <div fxLayout="row"  fxLayoutGap="20px">
+                            <b fxFlex="50"> Name</b> <p fxFlex="50">{{rowData['name']['value']}}</p>
+                        </div>
+
+                        <div fxLayout="row"  fxLayoutGap="20px">
+                            <b fxFlex="50">Short Description</b> <p fxFlex="50">{{rowData['shortDescription']['value']}}</p>
+                        </div>
+                        <div fxLayout="row"  fxLayoutGap="20px">
+                            <b fxFlex="50">Cloudenv</b> <p fxFlex="50">{{rowData['cloudenv']['value']}}</p>
+                        </div>
+                     
+                        <div fxLayout="row"  fxLayoutGap="20px">
+                            <b fxFlex="50">Stack Path</b> <p fxFlex="50">{{rowData['stack']['value']}}</p>
+                        </div>
+                        <div fxLayout="row"  fxLayoutGap="20px">
+                          <b fxFlex="50">Stack Number</b> <p fxFlex="50">{{rowData['stacknumber']['value']}}</p>
+                      </div>
+                   
+
+                    </div>
+                    <div fxFlex="50">
+                    
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </mat-tab>
+        <mat-tab label="IacPublicaddress">
+          <div fxLayout="row">
+            <div fxFlex="50">
+              <br>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Id</b> <p fxFlex="50">{{rowPublicAddress['id']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Public Ip Name</b> <p fxFlex="50">{{rowPublicAddress['publicipname']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">DNS Label Name</b> <p fxFlex="50">{{rowPublicAddress['dnslabelname']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Public IP Allocation Method</b> <p fxFlex="50">{{rowPublicAddress['publicIPAllocationMethod']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Public IP Address Version</b> <p fxFlex="50">{{rowPublicAddress['publicIPAddressVersion']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Idle Timeout In Minutes</b> <p fxFlex="50">{{rowPublicAddress['idleTimeoutInMinutes']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Status</b> <p fxFlex="50">{{rowPublicAddress['status']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Resource Status</b> <p fxFlex="50">{{rowPublicAddress['resourceStatus']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Resource Id</b> <p fxFlex="50">{{rowPublicAddress['resourceId']['value']}}</p>
+              </div>
+            
+            
+           
+            </div>
+            <div fxFlex="50">
+              
+
+            </div>
+          </div>
+
+        
+        </mat-tab>
+       
+       
+ 
+      </mat-tab-group>
+
+   </div>   
+    
+   
+   
+   <div *ngIf="rowPathVal == 'NIC'" fxLayout="row">
+    <mat-tab-group mat-align-tabs="start" fxFlex="100">
+        <mat-tab label="IacStack">
+
+            <div fxLayout="column" style="margin-left: 20px;margin-top:10px">
+                <div>
+                    <h3>Details</h3>
+                </div>
+                <div fxLayout="row">
+                    <div fxFlex="50">
+                        <div fxLayout="row"  fxLayoutGap="20px">
+                            <b fxFlex="50"> Id</b> <p fxFlex="50">{{rowData['id']}}</p>
+                        </div>
+                        <div fxLayout="row"  fxLayoutGap="20px">
+                            <b fxFlex="50"> Name</b> <p fxFlex="50">{{rowData['name']['value']}}</p>
+                        </div>
+
+                        <div fxLayout="row"  fxLayoutGap="20px">
+                            <b fxFlex="50">Short Description</b> <p fxFlex="50">{{rowData['shortDescription']['value']}}</p>
+                        </div>
+                        <div fxLayout="row"  fxLayoutGap="20px">
+                            <b fxFlex="50">Cloudenv</b> <p fxFlex="50">{{rowData['cloudenv']['value']}}</p>
+                        </div>
+                     
+                        <div fxLayout="row"  fxLayoutGap="20px">
+                            <b fxFlex="50">Stack Path</b> <p fxFlex="50">{{rowData['stack']['value']}}</p>
+                        </div>
+                        <div fxLayout="row"  fxLayoutGap="20px">
+                          <b fxFlex="50">Stack Number</b> <p fxFlex="50">{{rowData['stacknumber']['value']}}</p>
+                      </div>
+                   
+
+                    </div>
+                    <div fxFlex="50">
+                    
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </mat-tab>
+        <mat-tab label="IacNetworkinterface">
+          <div fxLayout="row">
+            <div fxFlex="50">
+              <br>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Id</b> <p fxFlex="50">{{rowNetworkInterface['id']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Name</b> <p fxFlex="50">{{rowNetworkInterface['name']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Short Description</b> <p fxFlex="50">{{rowNetworkInterface['shortDescription']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">VPC Name</b> <p fxFlex="50">{{rowNetworkInterface['refStackDetail']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Security Group Name</b> <p fxFlex="50">{{rowNetworkInterface['refSubnet']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Subnet Name</b> <p fxFlex="50">{{rowNetworkInterface['refSecurityGroup']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Public Address Name</b> <p fxFlex="50">{{rowNetworkInterface['refPublicaddress']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Status</b> <p fxFlex="50">{{rowNetworkInterface['status']['value']}}</p>
+              </div>
+
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Resource Status</b> <p fxFlex="50">{{rowNetworkInterface['resourceStatus']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Resource Id</b> <p fxFlex="50">{{rowNetworkInterface['resourceId']['value']}}</p>
+              </div>
+        
+            
+            
+            
+           
+            </div>
+            <div fxFlex="50">
+              
+
+            </div>
+          </div>
+
+        
+        </mat-tab>
+       
+       
+ 
+      </mat-tab-group>
+
+   </div> 
+   <div *ngIf="rowPathVal == 'INS'" fxLayout="row">
+    <mat-tab-group mat-align-tabs="start" fxFlex="100">
+        <mat-tab label="IacStack">
+
+            <div fxLayout="column" style="margin-left: 20px;margin-top:10px">
+                <div>
+                    <h3>Details</h3>
+                </div>
+                <div fxLayout="row">
+                    <div fxFlex="50">
+                        <div fxLayout="row"  fxLayoutGap="20px">
+                            <b fxFlex="50"> Id</b> <p fxFlex="50">{{rowData['id']}}</p>
+                        </div>
+                        <div fxLayout="row"  fxLayoutGap="20px">
+                            <b fxFlex="50"> Name</b> <p fxFlex="50">{{rowData['name']['value']}}</p>
+                        </div>
+
+                        <div fxLayout="row"  fxLayoutGap="20px">
+                            <b fxFlex="50">Short Description</b> <p fxFlex="50">{{rowData['shortDescription']['value']}}</p>
+                        </div>
+                        <div fxLayout="row"  fxLayoutGap="20px">
+                            <b fxFlex="50">Cloudenv</b> <p fxFlex="50">{{rowData['cloudenv']['value']}}</p>
+                        </div>
+                     
+                        <div fxLayout="row"  fxLayoutGap="20px">
+                            <b fxFlex="50">Stack Path</b> <p fxFlex="50">{{rowData['stack']['value']}}</p>
+                        </div>
+                        <div fxLayout="row"  fxLayoutGap="20px">
+                          <b fxFlex="50">Stack Number</b> <p fxFlex="50">{{rowData['stacknumber']['value']}}</p>
+                      </div>
+                    
+
+                    </div>
+                    <div fxFlex="50">
+                    
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </mat-tab>
+        <mat-tab label="IaCInstance">
+          <div fxLayout="row">
+            <div fxFlex="50">
+              <br>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Id</b> <p fxFlex="50">{{rowInstance['id']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Name</b> <p fxFlex="50">{{rowInstance['name']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Short Description</b> <p fxFlex="50">{{rowInstance['shortDescription']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Instance Type</b> <p fxFlex="50">{{rowInstance['instanceType']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Volume</b> <p fxFlex="50">{{rowInstance['volume']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Nic Name</b> <p fxFlex="50">{{rowInstance['nicName']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Authentication Type</b> <p fxFlex="50">{{rowInstance['authenticationType']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Keyname</b> <p fxFlex="50">{{rowInstance['keyname']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">VPC Name</b> <p fxFlex="50">{{rowInstance['refStackDetail']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Security Group Name</b> <p fxFlex="50">{{rowInstance['refSecurityGroup']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Status</b> <p fxFlex="50">{{rowInstance['status']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">ResourceStatus</b> <p fxFlex="50">{{rowInstance['resourceStatus']['value']}}</p>
+              </div>
+              <div fxLayout="row"  fxLayoutGap="20px">
+                <b fxFlex="50">Resource Id</b> <p fxFlex="50">{{rowInstance['resourceId']['value']}}</p>
+              </div>
+       
+        
+            
+            
+            
+           
+            </div>
+            <div fxFlex="50">
+              
+
+            </div>
+          </div>
+
+        
+        </mat-tab>
+       
+       
+ 
+      </mat-tab-group>
+
+   </div>         
+
+   
+</div>
